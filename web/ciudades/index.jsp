@@ -1,3 +1,7 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -38,9 +42,70 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Listar Ciudades</h3>
+                        
+                        
                     </div>
                     <div class="panel-body">
                   
+                        
+                         <table class="table table-condensed table-hover table-bordered">
+                            
+                            <thead>
+                                
+                            <th>Id</th>
+                            <th>Nombre</th>
+                           
+                            <th>acciones</th>
+                            
+                            </thead>
+                            
+                            <tbody>
+                                
+                                <%
+                                    Connection con=null;
+                                    String driver="com.mysql.jdbc.Driver";
+                                    String user="root";
+                                   String pass="";
+                                   String url="jdbc:mysql://localhost:3306/javae";
+                                   try{
+                                   
+                                   Class.forName(driver);
+                                   con=DriverManager.getConnection(url,user,pass);
+                                   Statement stmt=con.createStatement();
+                                   stmt.executeQuery("Select * from ciudades where estado='activo'");
+                                   ResultSet rs=stmt.getResultSet();
+                                   while(rs.next()){
+                                   out.println("<tr>");
+                                   out.println("<td>"+rs.getString("ciudad_id")+"</td>");
+                                   out.println("<td>"+rs.getString("nombre")+"</td>");
+                                   
+                                   out.println("</tr>");
+                                   
+                                   }
+                                   }catch(Exception ex){
+                                       out.println("Error de conexion"+ex.getMessage());
+                                   }
+                                   
+                                    %>
+                                
+                                
+                            </tbody>
+                            
+                            
+                        </table>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                     </div>
                 </div>
             </div>
